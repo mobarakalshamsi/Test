@@ -1,0 +1,100 @@
+openapi: 3.0.0
+info:
+  version: 0.0-oas3
+  title: iris example
+  description: >-
+    A simple service to get cpuinfo as an example of using OAS 3.0
+    specification and codegen
+  termsOfService: 'http://swagger.io/terms/'
+  contact:
+    name: REST Service Example
+  license:
+    name: Apache
+paths:
+  /predict/{id}:
+    get:
+      tags:
+        - PRED
+      operationId: my_defs.prediction.my_prediction
+      description: Returns cpu information of the hosting server
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: array
+            items:
+              type: number
+            minItems: 1
+          style: simple
+          explode: true
+        - in: query
+          name: metadata
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: 'CPU info, or add more text'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CPU'
+  /sum/<arg1>/<arg2>:
+    get:
+      tags:
+        - SUM
+      operationId: sum.sum
+      description: Returns cpu information of the hosting server
+      responses:
+        '200':
+          description: 'CPU info, or add more text'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CPU'
+
+  /cpu:
+    get:
+      tags:
+        - CPU
+      operationId: my_defs.cpu_2020.get_processor_name
+      description: Returns cpu information of the hosting server
+      responses:
+        '200':
+          description: 'CPU info, or add more text'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CPU'
+  /os:
+    get:
+      tags:
+        - OS
+      operationId: my_defs.cpu_2020.get_os
+      description: Returns os information of the hosting server
+      responses:
+        '200':
+          description: 'os info, or add more text'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OS'
+
+servers:
+  - url: 'http://localhost:8080/'
+components:
+  schemas:
+    CPU:
+      type: object
+      required:
+        - model
+      properties:
+        model:
+          type: string
+    OS:
+      type: object
+      required:
+        - model
+      properties:
+        model:
+          type: string
